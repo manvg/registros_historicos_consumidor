@@ -26,6 +26,6 @@ public class RegistroHistoricoService {
         signosVitales.setPresionDiastolica(signos.getPresionDiastolica());
 
         registroHistoricoRepository.save(signosVitales);
-        System.out.println("Alerta guardada en la base de datos para el paciente: " + signos.getNombrePaciente());
+        System.out.println("RegistroHistoricoService => OK datos de : " + signos.getNombrePaciente());
     }
 }
