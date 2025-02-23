@@ -1,6 +1,6 @@
 services:
   registros-historicos-consumidor:
-    image: ms-registros-historicos-consumidor
+    image: manvg/ms-registros-historicos-consumidor
     container_name: registros-historicos-consumidor
     ports:
       - "8084:8084"
@@ -15,10 +15,10 @@ services:
       SPRING_RABBITMQ_QUEUE: "registros_historicos_queue"
 
       # Configuración de Oracle Cloud
-      SPRING_DATASOURCE_URL: "jdbc:oracle:thin:@qhkv1hxjx2pk6k3q_tp?TNS_ADMIN=/app/wallet"
+      SPRING_DATASOURCE_URL: "jdbc:oracle:thin:@qhkv1hxjx2pk6k3q_tp?TNS_ADMIN=${TNS_ADMIN}"
       SPRING_DATASOURCE_USERNAME: "USUARIOMICROSERVICIO"
       SPRING_DATASOURCE_PASSWORD: "UsuarioMicro123"
-      SPRING_DATASOURCE_DRIVER_CLASS_NAME: "oracle.jdbc.driver.OracleDriver"
+      SPRING_DATASOURCE_DRIVER_CLASS_NAME: "oracle.jdbc.OracleDriver"
       SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT: "org.hibernate.dialect.OracleDialect"
       SPRING_JPA_HIBERNATE_DDL_AUTO: "none"
 
@@ -29,9 +29,12 @@ services:
       # Ruta de la Oracle Wallet (ya copiada dentro del contenedor)
       TNS_ADMIN: "/app/wallet"
 
+    volumes:
+      - /ruta/local/wallet:/app/wallet 
+
     restart: always
     networks:
-      - external_network
+      - kafka_kafka-net
 
 networks:
   kafka_kafka-net:
