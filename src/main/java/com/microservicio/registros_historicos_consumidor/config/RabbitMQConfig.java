@@ -29,7 +29,7 @@ public class RabbitMQConfig {
     }
 
     @Bean
-    public Binding bindingAlertasCriticas(Queue registrosHistoricosQueue, DirectExchange exchange) {
+    public Binding bindingRegistrosHistoricos(Queue registrosHistoricosQueue, DirectExchange exchange) {
         return BindingBuilder.bind(registrosHistoricosQueue).to(exchange).with(registrosHistoricosRoutingKey);
     }
 
