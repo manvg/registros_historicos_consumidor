@@ -5,6 +5,7 @@ services:
     ports:
       - "8084:8084"
     environment:
+      # RabbitMQ Configuración
       SPRING_RABBITMQ_HOST: "50.17.240.116"
       SPRING_RABBITMQ_PORT: "5672"
       SPRING_RABBITMQ_USERNAME: "admin"
@@ -12,6 +13,22 @@ services:
       RABBITMQ_EXCHANGE_ALERTAS: "alertas_medicas_exchange"
       RABBITMQ_ROUTINGKEY_ALERTAS: "registros_historicos_key"
       SPRING_RABBITMQ_QUEUE: "registros_historicos_queue"
+
+      # Configuración de Oracle Cloud
+      SPRING_DATASOURCE_URL: "jdbc:oracle:thin:@qhkv1hxjx2pk6k3q_tp?TNS_ADMIN=/app/wallet"
+      SPRING_DATASOURCE_USERNAME: "USUARIOMICROSERVICIO"
+      SPRING_DATASOURCE_PASSWORD: "UsuarioMicro123"
+      SPRING_DATASOURCE_DRIVER_CLASS_NAME: "oracle.jdbc.driver.OracleDriver"
+      SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT: "org.hibernate.dialect.OracleDialect"
+      SPRING_JPA_HIBERNATE_DDL_AUTO: "none"
+
+      # Configuración de HikariCP (pool de conexiones)
+      SPRING_DATASOURCE_HIKARI_MAXIMUM_POOL_SIZE: "10"
+      SPRING_DATASOURCE_HIKARI_CONNECTION_TIMEOUT: "30000"
+
+      # Ruta de la Oracle Wallet (ya copiada dentro del contenedor)
+      TNS_ADMIN: "/app/wallet"
+
     restart: always
     networks:
       - external_network
