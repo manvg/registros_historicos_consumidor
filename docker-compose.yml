@@ -1,6 +1,6 @@
 services:
   registros-historicos-consumidor:
-    image: manvg/ms-registros-historicos-consumidor
+    image: ms-registros-historicos-consumidor
     container_name: registros-historicos-consumidor
     ports:
       - "8084:8084"
@@ -34,5 +34,5 @@ services:
       - external_network
 
 networks:
-  external_network:
-    driver: bridge
+  kafka_kafka-net:
+    external: true
