@@ -1,19 +1,36 @@
 package com.microservicio.registros_historicos_consumidor.config;
 
-import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.amqp.core.*;
+
 @Configuration
 public class RabbitMQConfig {
 
+    @Value("${rabbitmq.exchange.alertas}")
+    private String alertasExchange;
+
     @Value("${rabbitmq.queue.registros_historicos}")
-    private String alertasCriticasQueue;
+    private String registrosHistoricosQueue;
+
+    @Value("${rabbitmq.routingkey.registros_historicos}")
+    private String registrosHistoricosRoutingKey;
 
     @Bean
-    public Queue alertasCriticasQueue() {
-        return new Queue(alertasCriticasQueue, true);
+    public DirectExchange exchange() {
+        return new DirectExchange(alertasExchange);
+    }
+
+    @Bean
+    public Queue registrosHistoricosQueue() {
+        return new Queue(registrosHistoricosQueue, true);
+    }
+
+    @Bean
+    public Binding bindingAlertasCriticas(Queue registrosHistoricosQueue, DirectExchange exchange) {
+        return BindingBuilder.bind(registrosHistoricosQueue).to(exchange).with(registrosHistoricosRoutingKey);
     }
 
     @Bean
