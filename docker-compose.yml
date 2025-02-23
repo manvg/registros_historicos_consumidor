@@ -1,0 +1,21 @@
+services:
+  registros-historicos-consumidor:
+    image: manvg/ms-registros-historicos-consumidor
+    container_name: registros-historicos-consumidor
+    ports:
+      - "8084:8084"
+    environment:
+      SPRING_RABBITMQ_HOST: "50.17.240.116"
+      SPRING_RABBITMQ_PORT: "5672"
+      SPRING_RABBITMQ_USERNAME: "admin"
+      SPRING_RABBITMQ_PASSWORD: "usuarioec2"
+      RABBITMQ_EXCHANGE_ALERTAS: "alertas_medicas_exchange"
+      RABBITMQ_ROUTINGKEY_ALERTAS: "registros_historicos_key"
+      SPRING_RABBITMQ_QUEUE: "registros_historicos_queue"
+    restart: always
+    networks:
+      - external_network
+
+networks:
+  external_network:
+    driver: bridge
